@@ -44,18 +44,20 @@ rps(comp)
 
 if choice == comp:
   print("It's a draw")
-if choice == 2:
+elif choice == 2:
   if comp == 1:
     print("You win")
   if comp == 0:
     print("You lose")
-if choice == 1:
+elif choice == 1:
   if comp == 0:
     print("You win")
   if comp == 2:
     print("You lose")
-if choice == 0:
+elif choice == 0:
   if comp == 1:
     print("You lose")
   if comp == 2:
     print("You win")
+else:
+    print("You typed an invalid number.")
