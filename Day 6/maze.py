@@ -7,9 +7,9 @@ while not at_goal():
     if right_is_clear():
         turn_right()
         move()
-    elif wall_in_front():
-        turn_left()
     elif front_is_clear():
         move()
+    elif wall_in_front():
+        turn_left()
     else:
-        move_left()
+        turn_left()
