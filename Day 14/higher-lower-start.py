@@ -14,7 +14,7 @@ def getindex():
 def compare(choice, index1, index2):
   if choice == "A" and index1['follower_count'] > index2['follower_count']:
     return True
-  if choice == "B" and index1['follower_count'] < index2['follower_count']:
+  elif choice == "B" and index1['follower_count'] < index2['follower_count']:
     return True
   else:
     return False
@@ -45,3 +45,6 @@ while True:
   else:
     print(f"Sorry, that's wrong. Final score: {score}")
     break
+
+
+  
