@@ -49,3 +49,14 @@ def checkresources(choice, flag):
             print(f"Sorry, there is not enough {i}.")
             flag = 1
             break
+
+
+# TODO: Process coins.
+def coins():
+    print("Please insert coins.")
+    quarter = float(input("how many quarters? "))
+    dime = float(input("how many dimes? "))
+    nickle = float(input("how many nickles? "))
+    penny = float(input("how many pennies? "))
+    money = (quarter * 0.25) + (dime * 0.10) + (nickle * 0.05) + (penny * 0.01)
+    return money
