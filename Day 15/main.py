@@ -40,3 +40,12 @@ def report():
     print(f"Milk: {resources['milk']}ml")
     print(f"Coffee: {resources['coffee']}g")
     print(f"Money: ${money}")
+
+
+# TODO: Check resources sufficient?
+def checkresources(choice, flag):
+    for i in resources:
+        if resources[i] < MENU[choice]["ingredients"][i]:
+            print(f"Sorry, there is not enough {i}.")
+            flag = 1
+            break
