@@ -63,3 +63,28 @@ def coins():
 
 
 # TODO: Check transaction successful?
+
+# TODO: Make Coffee.
+money = 0
+while True:
+    flag = 0
+    choice = input("What would you like? (espresso/latte/cappuccino): ").lower()
+    if choice == "report":
+        report()
+    elif choice == "off":
+        break
+    else:
+        checkresources(choice, flag)
+        if flag == 1:
+            continue
+        amount = coins()
+        if amount < MENU[choice]['cost']:
+            print("Sorry that's not enough money. Money refunded.")
+            continue
+        elif amount >= MENU[choice]['cost']:
+            change = amount - MENU[choice]['cost']
+            money += MENU[choice]['cost']
+            for i in resources:
+                resources[i] -= MENU[choice]["ingredients"][i]
+            print(f"Here is ${round(change, 2)} in change.")
+            print(f"Here is your {choice} ☕️. Enjoy!")
