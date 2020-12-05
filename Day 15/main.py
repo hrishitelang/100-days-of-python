@@ -35,3 +35,8 @@ resources = {
 # TODO: Prompt user by asking “What would you like? (espresso/latte/cappuccino):”
 # TODO: Turn off the Coffee Machine by entering “off” to the prompt.
 # TODO: Print report.
+def report():
+    print(f"Water: {resources['water']}ml")
+    print(f"Milk: {resources['milk']}ml")
+    print(f"Coffee: {resources['coffee']}g")
+    print(f"Money: ${money}")
