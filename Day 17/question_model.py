@@ -4,5 +4,5 @@ class Question:
         self.answer = answer
 
 
-new_q = Question("Is Hrishi my name?", "True")
-print(new_q.text)
+# new_q = Question("Is Hrishi my name?", "True")
+# print(new_q.text)
