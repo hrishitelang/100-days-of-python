@@ -9,16 +9,18 @@ class Snake:
 
     def __init__(self):
         self.segments = []
-        x = 0
         for i in range(3):
-            timmy = Turtle(shape="square")
-            timmy.color("white")
-            timmy.penup()
-            timmy.setposition(x, 0)
-            self.segments.append(timmy)
-            x -= 20
+            self.create_segment()
         self.head = self.segments[0]
 
+    def create_segment(self):
+        x = 0
+        timmy = Turtle(shape="square")
+        timmy.color("white")
+        timmy.penup()
+        timmy.setposition(x, 0)
+        self.segments.append(timmy)
+        x -= 20
 
     def up(self):
         if self.head.heading() != DOWN:
