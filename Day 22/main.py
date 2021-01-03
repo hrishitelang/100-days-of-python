@@ -1,7 +1,7 @@
 from turtle import Turtle, Screen
-
 from Ball import Ball
 from paddle import Paddle
+from scoreboard import Scoreboard
 import time
 
 screen = Screen()
@@ -9,6 +9,7 @@ screen.setup(width=800, height=600)
 screen.bgcolor("black")
 screen.title("Pong Game")
 screen.tracer(0)
+score = Scoreboard()
 
 r_paddle = Paddle(350, 0)
 l_paddle = Paddle(-350, 0)
@@ -20,9 +21,8 @@ screen.onkeypress(l_paddle.up, "w")
 screen.onkeypress(l_paddle.down, "s")
 
 ball = Ball()
-
+x = 0
 flag = True
-x = ball.move()
 while flag:
     ball.move()
     
@@ -31,17 +31,24 @@ while flag:
         ball.collide_y()
 
     #When the ball hits the paddle
-    if ball.distance(r_paddle) < 30 and ball.xcor() > 340 or ball.distance(l_paddle) < 30 and ball.xcor() < -340:
+    if ball.distance(r_paddle) < 30 and ball.xcor() > 320 or ball.distance(l_paddle) < 30 and ball.xcor() < -320:
         ball.collide_x()
+
     
     # When the ball goes out of bounds
-    if ball.xcor() > 400 or ball.xcor() < -400:
-        flag = False
-        screen.onclick(ball.goto(0, 0))
+    if ball.xcor() > 400:
+        ball.goto(0, 0)
         ball.collide_x()
-        flag = True
-        
+        score.lpoint()
+        ball.speedlimit = 0.1
+
+    if ball.xcor() < -400:
+        ball.goto(0, 0)
+        ball.collide_x()
+        score.rpoint()
+        ball.speedlimit = 0.1
+
     screen.update()
-    time.sleep(0.1)
+    time.sleep(ball.speedlimit)
 
 screen.exitonclick()
