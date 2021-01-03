@@ -6,6 +6,7 @@ class Ball(Turtle):
         self.shape("circle")
         self.color("white")
         self.penup()
+        self.speedlimit = 0.1
         self.xmove = 10
         self.ymove = 10
         
@@ -14,6 +15,8 @@ class Ball(Turtle):
 
     def collide_y(self):
         self.ymove *= -1
+        self.speedlimit *= 0.9
 
     def collide_x(self):
         self.xmove *= -1
+        self.speedlimit *= 0.9
