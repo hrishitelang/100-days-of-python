@@ -37,10 +37,9 @@ while flag:
     # When the ball goes out of bounds
     if ball.xcor() > 400 or ball.xcor() < -400:
         flag = False
-        if screen.onclick():
-            ball.goto(0, 0)
+        screen.onclick(ball.goto(0, 0))
+        ball.collide_x()
         flag = True
-
         
     screen.update()
     time.sleep(0.1)
