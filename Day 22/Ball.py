@@ -12,5 +12,8 @@ class Ball(Turtle):
     def move(self):
         self.goto(self.xcor() + self.xmove, self.ycor() + self.ymove)
 
-    def collide(self):
-        self.ymove = -10
+    def collide_y(self):
+        self.ymove *= -1
+
+    def collide_x(self):
+        self.xmove *= -1
