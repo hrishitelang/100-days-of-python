@@ -22,9 +22,26 @@ screen.onkeypress(l_paddle.down, "s")
 ball = Ball()
 
 flag = True
-
+x = ball.move()
 while flag:
     ball.move()
+    
+    #When the ball hits the top and bottom wall
+    if ball.ycor() > 280 or ball.ycor() < -280:
+        ball.collide_y()
+
+    #When the ball hits the paddle
+    if ball.distance(r_paddle) < 30 and ball.xcor() > 340 or ball.distance(l_paddle) < 30 and ball.xcor() < -340:
+        ball.collide_x()
+    
+    # When the ball goes out of bounds
+    if ball.xcor() > 400 or ball.xcor() < -400:
+        flag = False
+        if screen.onclick():
+            ball.goto(0, 0)
+        flag = True
+
+        
     screen.update()
     time.sleep(0.1)
 
