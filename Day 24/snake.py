@@ -1,26 +1,34 @@
 from turtle import Turtle
+
 MOVE_DISTANCE = 20
 UP = 90
 DOWN = 270
 LEFT = 180
 RIGHT = 0
 
-class Snake:
 
+class Snake(Turtle):
     def __init__(self):
+        super().__init__()
         self.segments = []
+        self.create_snake()
+
+    def create_snake(self):
         for i in range(3):
-            self.create_segment()
+            x = 0
+            timmy = Turtle(shape="square")
+            timmy.color("white")
+            timmy.penup()
+            timmy.setposition(x, 0)
+            self.segments.append(timmy)
+            x -= 20
         self.head = self.segments[0]
 
-    def create_segment(self):
-        x = 0
-        timmy = Turtle(shape="square")
-        timmy.color("white")
-        timmy.penup()
-        timmy.setposition(x, 0)
-        self.segments.append(timmy)
-        x -= 20
+    def reset(self):
+        for segment in self.segments:
+            segment.goto(5000, 5000)
+        self.segments = []
+        self.create_snake()
 
     def up(self):
         if self.head.heading() != DOWN:
