@@ -35,5 +35,17 @@ import csv
 import pandas
 
 data = pandas.read_csv('2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv')
-squirrel_df = pandas.DataFrame(data['Primary Fur Color'].value_counts())
-squirrel_df.to_csv("squirrel_count.csv")
+# squirrel_df = pandas.DataFrame(data['Primary Fur Color'].value_counts())
+# squirrel_df.to_csv("squirrel_count.csv")
+
+red_squirrels = pandas.Series(data['Primary Fur Color'] == 'Cinnamon').count()
+gray_squirrels = pandas.Series(data['Primary Fur Color'] == 'Gray').count()
+black_squirrels = pandas.Series(data['Primary Fur Color'] == 'Black').count()
+
+dictionary = {
+    'Colors': ['Gray', 'Cinnamon', 'Black'],
+    'Count': [gray_squirrels, red_squirrels, black_squirrels]
+}
+
+squirrel_df = pandas.DataFrame(dictionary)
+squirrel_df.to_csv("squirrel_count2.csv")
