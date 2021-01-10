@@ -1,17 +1,30 @@
 from tkinter import *
+from tkinter import messagebox
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_text():
+    name_answer = name_text.get()
     email_answer = email_text.get()
     password_answer = password_text.get()
-    name_answer = name_text.get()
 
-    with open('data.txt', 'a') as file:
-        file.write(f"{name_answer} | {email_answer} | {password_answer}\n")
-    name_text.delete(0, 'end')
-    email_text.delete(0, 'end')
-    password_text.delete(0, 'end')
+    if name_answer == "":
+        messagebox.showerror(title="Error", message="Please enter the name of the website.")
+        if email_answer == "":
+            messagebox.showerror(title="Error", message="Please enter your email address.")
+
+        if password_answer == "":
+            messagebox.showerror(title="Error", message="Please enter your password.")
+    else:
+        flag = messagebox.askokcancel(title=name_answer, message=f"Here are the details:\nSite: {name_answer}\nEmail: {email_answer}\nPassword: {password_answer}\n"
+                                                                 f"Are you sure you want to save these details?")
+
+        if flag:
+            with open('data.txt', 'a') as file:
+                file.write(f"{name_answer} | {email_answer} | {password_answer}\n")
+            name_text.delete(0, 'end')
+            email_text.delete(0, 'end')
+            password_text.delete(0, 'end')
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
