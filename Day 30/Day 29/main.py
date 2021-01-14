@@ -67,21 +67,33 @@ def save_text():
                 email_text.delete(0, 'end')
                 password_text.delete(0, 'end')
 
+
 # ---------------------------- FIND PASSWORD ------------------------------- #
 def find_password():
     name_answer = name_text.get()
-    with open("data.json", "r") as file:
-        data = json.load(file)
-    print(data)
-    for i in data:
-        print(data)
-        '''
-        if data[i] == name_answer:
-            email_answer = data[i]["email"].get()
-            password_answer = data[i]["password"].get()
-            messagebox.showinfo(title=name_answer, message=f'Here are the following details:\nEmail: {email_answer}\n'
-                                                           f'Password: {password_answer}')
-        '''
+    try:
+        with open("data.json", "r") as file:
+            data = json.load(file)
+        # print(type(data))
+
+    except FileNotFoundError:
+        messagebox.showerror(title="Error", message="There is no data file found! Kindly fill the data first")
+
+    else:
+        for item in data:
+            # print(item)
+            if item == name_answer:
+                email_answer = data[item]["email"]
+                password_answer = data[item]["password"]
+                messagebox.showinfo(title=name_answer, message=f'Here are the following details:\nEmail: {email_answer}\n'
+                                                               f'Password: {password_answer}')
+
+            elif name_answer == "":
+                messagebox.showerror(title="Error", message="Please enter the website name.")
+
+            elif item != name_answer:
+                messagebox.showinfo(title="No data exists", message="No details for the website exists.")
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
