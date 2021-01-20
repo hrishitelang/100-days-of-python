@@ -1,16 +1,14 @@
 from tkinter import *
 import pandas as pd
 import random
+import os
 BACKGROUND_COLOR = "#B1DDC6"
 
 # ---------------------------- FUNCTIONS TO DESCRIBE ---------------------------- #
-data = pd.read_csv('data/french_words.csv')
-dictionary = data.to_dict('records')
-
 
 def change_word():
     global word, timer, language, index
-    print(dictionary)
+    print(len(dictionary)-1)
     window.after_cancel(timer)
     canvas.delete(word)
     canvas.delete(language)
@@ -23,6 +21,8 @@ def change_word():
 
 def insert_unknown_word():
     with open('words_to_learn.csv', 'a') as file:
+        if os.path.getsize('words_to_learn.csv') == 0:
+            file.write('French'+','+'English'+'\n')
         file.write(dictionary[index]['French']+','+dictionary[index]['English']+'\n')
     change_word()
 
@@ -43,6 +43,10 @@ def show_english_word():
 
 
 # ---------------------------- UI DESIGN ---------------------------- #
+
+data = pd.read_csv('data/french_words.csv')
+
+dictionary = data.to_dict('records')
 
 window = Tk()
 window.config(width=1000, height=1000, padx=50, pady=50, bg=BACKGROUND_COLOR)
