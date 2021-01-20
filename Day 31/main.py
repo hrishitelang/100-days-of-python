@@ -3,17 +3,35 @@ from tkinter import *
 import pandas as pd
 import random
 
-#---------------------------- UI DESIGN ----------------------------#
 
+# ---------------------------- UI DESIGN ---------------------------- #
 
 def change_word():
-    global french_word
-    canvas.delete(french_word)
-    french_word = canvas.create_text(400, 263, text=data['French'].iloc[random.randint(0, 100)], font=('Arial', 40, "bold"))
+    global word, timer, language, index
+    window.after_cancel(timer)
+    canvas.delete(word)
+    canvas.delete(language)
+    canvas.create_image(400, 263, image=old_image)
+    canvas.itemconfig(new_image, image=old_image)
+    language = canvas.create_text(400, 100, text='French', font=('Arial', 40, "italic"))
+    index = random.randint(0, 100)
+    word = canvas.create_text(400, 263, text=data['French'].iloc[index], font=('Arial', 40, "bold"))
+    timer = window.after(3000, show_english_word)
 
 
-#---------------------------- UI DESIGN ----------------------------#
+def show_english_word():
+    global word, language, index
+    canvas.delete(word)
+    canvas.delete(language)
+    canvas.create_image(400, 263, image=new_image)
+    canvas.itemconfig(old_image, image=new_image)
+    language = canvas.create_text(400, 100, text='English', font=('Arial', 40, "italic"), fill='white')
+    word = canvas.create_text(400, 263, text=data['English'].iloc[index], font=('Arial', 40, "bold"), fill='white')
+    # canvas.itemconfig(language, fill='white', text='English')
+    # canvas.itemconfig(word, fill='white', text=data['English'].iloc[index])
 
+
+# ---------------------------- UI DESIGN ---------------------------- #
 
 window = Tk()
 window.config(width=1000, height=1000, padx=50, pady=50, bg=BACKGROUND_COLOR)
@@ -21,19 +39,16 @@ window.title('Flashy')
 canvas = Canvas(width=800, height=525, bg=BACKGROUND_COLOR, highlightthickness=0)
 canvas.grid(row=1, column=1, columnspan=2)
 
-card_image = PhotoImage(file="images/card_front.png")
-canvas.create_image(400, 263, image=card_image)
-canvas.create_text(400, 100, text='French', font=('Arial', 40, "italic"))
+old_image = PhotoImage(file="images/card_front.png")
+new_image = PhotoImage(file="images/card_back.png")
+canvas.create_image(400, 263, image=old_image)
+language = canvas.create_text(400, 100, text='French', font=('Arial', 40, "italic"))
+
+timer = window.after(3000, show_english_word)
 
 data = pd.read_csv('data/french_words.csv')
-word = data['French'].iloc[random.randint(0, 100)]
-french_word = canvas.create_text(400, 263, text=word, font=('Arial', 40, "bold"))
-
-# language = Label(text="Title", justify=CENTER,font=('Arial', 40, "italic"), bg='white')
-# language.place(x=340, y=100)
-
-# french_word = Label(text='word', justify=CENTER, font=('Arial', 60, "bold"), bg='white')
-# french_word.place(x=300, y=263)
+index = random.randint(0, 100)
+word = canvas.create_text(400, 263, text=data['French'].iloc[index], font=('Arial', 40, "bold"))
 
 wrong_image = PhotoImage(file="images/wrong.png")
 wrong_button = Button(image=wrong_image, highlightthickness=0, command=change_word)
@@ -44,3 +59,9 @@ right_button = Button(image=right_image, highlightthickness=0, command=change_wo
 right_button.grid(row=2, column=2)
 
 window.mainloop()
+
+# language = Label(text="Title", justify=CENTER,font=('Arial', 40, "italic"), bg='white')
+# language.place(x=340, y=100)
+
+# french_word = Label(text='word', justify=CENTER, font=('Arial', 60, "bold"), bg='white')
+# french_word.place(x=300, y=263)
