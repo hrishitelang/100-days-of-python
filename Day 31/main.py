@@ -1,13 +1,16 @@
-BACKGROUND_COLOR = "#B1DDC6"
 from tkinter import *
 import pandas as pd
 import random
+BACKGROUND_COLOR = "#B1DDC6"
 
+# ---------------------------- FUNCTIONS TO DESCRIBE ---------------------------- #
+data = pd.read_csv('data/french_words.csv')
+dictionary = data.to_dict('records')
 
-# ---------------------------- UI DESIGN ---------------------------- #
 
 def change_word():
     global word, timer, language, index
+    print(dictionary)
     window.after_cancel(timer)
     canvas.delete(word)
     canvas.delete(language)
@@ -15,9 +18,17 @@ def change_word():
     canvas.itemconfig(new_image, image=old_image)
     language = canvas.create_text(400, 100, text='French', font=('Arial', 40, "italic"))
     index = random.randint(0, 100)
-    word = canvas.create_text(400, 263, text=data['French'].iloc[index], font=('Arial', 40, "bold"))
+    word = canvas.create_text(400, 263, text=dictionary[index]['French'], font=('Arial', 40, "bold"))
     timer = window.after(3000, show_english_word)
 
+def insert_unknown_word():
+    with open('words_to_learn.csv', 'a') as file:
+        file.write(dictionary[index]['French']+','+dictionary[index]['English']+'\n')
+    change_word()
+
+def right_word():
+    dictionary.remove(dictionary[index])
+    change_word()
 
 def show_english_word():
     global word, language, index
@@ -26,7 +37,7 @@ def show_english_word():
     canvas.create_image(400, 263, image=new_image)
     canvas.itemconfig(old_image, image=new_image)
     language = canvas.create_text(400, 100, text='English', font=('Arial', 40, "italic"), fill='white')
-    word = canvas.create_text(400, 263, text=data['English'].iloc[index], font=('Arial', 40, "bold"), fill='white')
+    word = canvas.create_text(400, 263, text=dictionary[index]['English'], font=('Arial', 40, "bold"), fill='white')
     # canvas.itemconfig(language, fill='white', text='English')
     # canvas.itemconfig(word, fill='white', text=data['English'].iloc[index])
 
@@ -46,16 +57,21 @@ language = canvas.create_text(400, 100, text='French', font=('Arial', 40, "itali
 
 timer = window.after(3000, show_english_word)
 
-data = pd.read_csv('data/french_words.csv')
+# print(data)
+# print(dictionary[0])
+# del dictionary[0]
+# print(dictionary)
+
 index = random.randint(0, 100)
-word = canvas.create_text(400, 263, text=data['French'].iloc[index], font=('Arial', 40, "bold"))
+word = canvas.create_text(400, 263, text=dictionary[index]['French'], font=('Arial', 40, "bold"))
 
 wrong_image = PhotoImage(file="images/wrong.png")
-wrong_button = Button(image=wrong_image, highlightthickness=0, command=change_word)
+wrong_button = Button(image=wrong_image, highlightthickness=0, command=insert_unknown_word)
 wrong_button.grid(row=2, column=1)
 
 right_image = PhotoImage(file="images/right.png")
 right_button = Button(image=right_image, highlightthickness=0, command=change_word)
+
 right_button.grid(row=2, column=2)
 
 window.mainloop()
