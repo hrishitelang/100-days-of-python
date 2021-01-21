@@ -13,6 +13,7 @@ connection.sendmail(from_addr=my_email, to_addrs="jeffroberts1003@yahoo.com", ms
 connection.close()
 
 '''
+# This is another code that also works
 port = 465  # For SSL
 my_email = "clareatkins7@gmail.com"
 password = "gigudi1234"
