@@ -38,7 +38,7 @@ def is_it_night():
     sunrise = int(data["results"]["sunrise"].split('T')[1][:2])
     sunset = int(data["results"]["sunset"].split('T')[1][:2])
     time_now = datetime.now()
-    if now.hour >= sunset or now.hour <= sunrise:
+    if time_now.hour >= sunset or time_now.hour <= sunrise:
         return True
     else:
         return False
@@ -51,16 +51,12 @@ while True:
     time.sleep(60)
     if is_iss_up() and is_it_night():
         context = ssl.create_default_context()
-        connection = smtplib.SMTP("smtp.gmail.com", port=PORT)
         # A way of securing our connection to our email server
         connection.starttls(context=context)
-        connection.login(user=my_email, password=password)
-        connection.sendmail(
-            from_addr=my_email,
-            to_addrs=my_email,
-            msg="Subject:Look up! \n\nISS is above you!"
-        )
-        connection.close()
-
-
-
+        with smtplib.SMTP("smtp.gmail.com", port=PORT) as connection:
+            connection.login(user=my_email, password=password)
+            connection.sendmail(
+                from_addr=my_email,
+                to_addrs=my_email,
+                msg="Subject:Look up! \n\nISS is above you!"
+            )
