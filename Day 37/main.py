@@ -53,3 +53,8 @@ update_parameters = {
 
 response = requests.put(url=update_endpoint, json=update_parameters, headers=header)
 print(response.text)
+
+delete_endpoint = f"https://pixe.la//v1/users/{USERNAME}/graphs/{GRAPH_ID}/{today.strftime('%Y%m%d')}"
+
+# response = requests.delete(url=delete_endpoint, headers=header)
+# print(response.text)
