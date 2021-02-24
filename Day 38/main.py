@@ -2,8 +2,8 @@ import os
 import requests
 from datetime import datetime
 
-EXERCISE_ENDPOINT = os.environ.get('EXERCISE')
-SHEETY_ENDPOINT = os.environ.get('SHEETY')
+EXERCISE_ENDPOINT = os.environ['EXERCISE_ENDPOINT']
+SHEETY_ENDPOINT = os.environ['SHEETY_ENDPOINT']
 API_KEY = os.environ['API_KEY']
 APP_ID = os.environ['APP_ID']
 # GENDER = input("What is your age? (male/female):")
