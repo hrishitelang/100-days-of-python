@@ -2,7 +2,6 @@ import os
 import requests
 from newsapi import NewsApiClient
 from twilio.rest import Client
-from dotenv import load_dotenv
 
 STOCK = "TSLA"
 COMPANY_NAME = "Tesla Inc"
@@ -13,18 +12,19 @@ they are interpreted as strings, so they will still need to be converted! Conclu
 
 If you're worried about the security of the text file on your PC, then you could encrypt the file using something like AXCrypt.
 '''
-load_dotenv("C:/Users/Admin/Desktop/100 Days of Python/Day 36/.env")
+
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
-STOCK_API_ID = os.getenv("STOCK_API_ID")
-NEWS_API_ID = os.getenv("NEWS_API_ID")
-TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
-TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+STOCK_API_ID = os.environ['STOCK_API_ID']
+NEWS_API_ID = os.environ['NEWS_API_ID']
+TWILIO_ACCOUNT_SID = os.environ['TWILIO_ACCOUNT_SID']
+TWILIO_AUTH_TOKEN = os.environ['TWILIO_AUTH_TOKEN']
 
 ## STEP 1: Use https://newsapi.org/docs/endpoints/everything
 # When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
 #HINT 1: Get the closing price for yesterday and the day before yesterday. Find the positive difference between the two prices. e.g. 40 - 20 = -20, but the positive difference is 20.
-#HINT 2: Work out the value of 5% of yerstday's closing stock price. 
+#HINT 2: Work out the value of 5% of yerstday's closing stock price.
+
 parameters = {
     'function': 'TIME_SERIES_DAILY',
     'symbol': STOCK,
